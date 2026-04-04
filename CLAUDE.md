@@ -17,4 +17,6 @@ When **`habit-coach-api`** GraphQL schema or operations change, update this app 
 
 ## Git
 
-**Default:** branches (`feat/…`, `fix/…`, `chore/…`), meaningful commits, **push**, then **merge into `main`** (no PR workflow). **Exception:** trivial doc-only fixes on `main`. **Cross-repo:** merge both repos in a sensible order; mention the pairing in a commit message if helpful. Same rules: `habit-coach-api` / [PROJECT_PLAN.md](https://github.com/GeorgiDS9/habit-coach-api/blob/main/PROJECT_PLAN.md).
+Do NOT add `Co-Authored-By` trailers to commit messages.
+
+**Default:** branches (`feat/…`, `fix/…`, `chore/…`), several meaningful commits (do separation of concerns, do not bundle up all changes intojust 1 or 2 commits), **push**, then **merge into `main`** (no PR workflow). **Exception:** trivial doc-only fixes on `main`. **Cross-repo:** merge both repos in a sensible order; mention the pairing in a commit message if helpful. Same rules: `habit-coach-api` / [PROJECT_PLAN.md](https://github.com/GeorgiDS9/habit-coach-api/blob/main/PROJECT_PLAN.md).
