@@ -66,13 +66,13 @@ export default function DashboardPage() {
         <StatsCard
           title="Best current streak"
           value={bestStreak > 0 ? `${bestStreak}d` : "—"}
-          subtitle="across all habits"
+          subtitle="longest active run across all habits right now"
           highlight={bestStreak > 0}
         />
         <StatsCard
           title="Check-ins this week"
           value={totalCompletionsThisWeek}
-          subtitle="last 7 days"
+          subtitle="rolling 7-day window (UTC)"
         />
       </div>
 
