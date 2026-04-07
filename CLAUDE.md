@@ -13,6 +13,21 @@
    **Local:** `../habit-coach-api/ARCHITECTURE_FLOWS.md` — system overview, auth sequence, ER diagram, data flow, FE component tree.
 4. Optional repo notes: [AGENTS.md](./AGENTS.md)
 
+## Testing
+
+Run before every push or merge — CI must not be the first to catch failures.
+
+```bash
+npm test          # vitest (RTL unit tests, jsdom)
+npm run typecheck # tsc --noEmit
+npm run build     # Next.js production build — catches runtime-visible type gaps
+```
+
+Run `npm run test:e2e` only when the API is running locally (requires `habit-coach-api` on `:4000`).
+
+**Test hygiene rules:**
+- Never hardcode dates in tests (e.g. `"2026-04-04"`). Use `new Date().toISOString().slice(0, 10)` for "today". Hardcoded dates rot silently and only fail in CI weeks later.
+
 ## Contract
 
 When **`habit-coach-api`** GraphQL schema or operations change, update this app (operations, codegen types, env, UI) in the **same** slice unless the task is explicitly backend-only.
@@ -21,4 +36,4 @@ When **`habit-coach-api`** GraphQL schema or operations change, update this app 
 
 Do NOT add `Co-Authored-By` trailers to commit messages.
 
-**Default:** branches (`feat/…`, `fix/…`, `chore/…`), several meaningful commits (do separation of concerns, do not bundle up all changes into just 1 or 2 commits), **push**, then **merge into `main`** (no PR workflow). **Exception:** trivial doc-only fixes on `main`. **Cross-repo:** merge both repos in a sensible order; mention the pairing in a commit message if helpful. Same rules: `habit-coach-api` / [PROJECT_PLAN.md](https://github.com/GeorgiDS9/habit-coach-api/blob/main/PROJECT_PLAN.md).
+**Default:** branches (`feat/…`, `fix/…`, `chore/…`), several meaningful commits (do separation of concerns, do not bundle up all changes into just 1 or 2 commits); **push**, then **merge into `main`** (`git checkout main && git merge <branch> && git push origin main`) — no PR workflow. **Exception:** trivial doc-only fixes on `main`. **Cross-repo:** merge both repos in a sensible order; note the dependency in a commit message if helpful. Same rules apply in `habit-coach-api`.
