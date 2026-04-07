@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing/react";
 import { HABITS_QUERY, HABIT_LOGS_QUERY } from "@/graphql/operations";
+import type { Habit, HabitLog } from "@/graphql/generated/graphql";
 import HabitDetailPage from "../page";
 import { todayUTC, daysAgoUTC } from "@/lib/format-date";
 
@@ -50,7 +51,7 @@ const habitsMock = {
 
 const emptyHabitsMock = {
   request: { query: HABITS_QUERY },
-  result: { data: { habits: [] as any[] } },
+  result: { data: { habits: [] as Habit[] } },
 };
 
 const logsMock = {
@@ -58,7 +59,7 @@ const logsMock = {
     query: HABIT_LOGS_QUERY,
     variables: { habitId: HABIT_ID, from, to },
   },
-  result: { data: { habitLogs: [] as any[] } },
+  result: { data: { habitLogs: [] as HabitLog[] } },
 };
 
 describe("HabitDetailPage", () => {
