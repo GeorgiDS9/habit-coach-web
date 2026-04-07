@@ -53,23 +53,29 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="border-b border-gray-200 bg-white">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <header className="border-b border-gray-200 bg-white sticky top-0 z-10 shadow-sm">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-1">
-            <span className="mr-4 text-base font-bold text-indigo-700">Habit Coach</span>
-            <NavLink href={ROUTES.HABITS}>Habits</NavLink>
-            <NavLink href={ROUTES.DASHBOARD}>Dashboard</NavLink>
+          <div className="flex items-center gap-2">
+            <span className="mr-6 text-lg font-extrabold tracking-tight text-indigo-700">Habit Coach</span>
+            <nav className="flex items-center gap-1" aria-label="Main Navigation">
+              <NavLink href={ROUTES.HABITS}>Habits</NavLink>
+              <NavLink href={ROUTES.DASHBOARD}>Dashboard</NavLink>
+            </nav>
           </div>
           <button
             onClick={handleLogout}
-            className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
+            aria-label="Log out of your account"
+            className="text-sm font-medium text-gray-500 hover:text-red-600 transition-colors px-3 py-2 rounded-md hover:bg-red-50"
           >
             Log out
           </button>
         </div>
-      </nav>
-      <main className="mx-auto max-w-4xl px-4 py-8">{children}</main>
+      </header>
+      <main className="mx-auto w-full max-w-4xl px-4 py-10 flex-grow">{children}</main>
+      <footer className="py-10 text-center text-xs text-gray-400 border-t border-gray-100 bg-white/50">
+        &copy; {new Date().getFullYear()} Habit Coach. Build consistency, one day at a time.
+      </footer>
     </div>
   );
 }
