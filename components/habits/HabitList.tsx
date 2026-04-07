@@ -34,9 +34,15 @@ export function HabitList({
     return (
       <div
         role="alert"
-        className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+        className="flex flex-col items-start gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
       >
-        Failed to load habits. Please refresh the page.
+        <p>Failed to load habits. Please check your connection or try again.</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="rounded-md bg-red-100 px-3 py-1.5 font-medium text-red-800 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-400"
+        >
+          Retry
+        </button>
       </div>
     );
   }
