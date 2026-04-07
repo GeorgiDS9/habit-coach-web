@@ -9,7 +9,9 @@
 1. **[CODE_LAYOUT.md](./CODE_LAYOUT.md)** — where new files go; keep `app/` thin.
 2. **Full-stack plan + phases:** [habit-coach-api `PROJECT_PLAN.md`](https://github.com/GeorgiDS9/habit-coach-api/blob/main/PROJECT_PLAN.md)  
    **Local (sibling clones):** `../habit-coach-api/PROJECT_PLAN.md`
-3. Optional repo notes: [AGENTS.md](./AGENTS.md)
+3. **Architecture & flows:** [habit-coach-api `ARCHITECTURE_FLOWS.md`](https://github.com/GeorgiDS9/habit-coach-api/blob/main/ARCHITECTURE_FLOWS.md)  
+   **Local:** `../habit-coach-api/ARCHITECTURE_FLOWS.md` — system overview, auth sequence, ER diagram, data flow, FE component tree.
+4. Optional repo notes: [AGENTS.md](./AGENTS.md)
 
 ## Contract
 
