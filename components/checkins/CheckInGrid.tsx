@@ -1,3 +1,5 @@
+"use client";
+
 import { Skeleton } from "@/components/ui/Skeleton";
 import { formatShortDate, todayUTC } from "@/lib/format-date";
 import type { HabitLog } from "@/types/api";
