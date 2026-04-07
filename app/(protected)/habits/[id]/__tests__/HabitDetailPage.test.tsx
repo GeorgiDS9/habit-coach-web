@@ -35,6 +35,7 @@ const habitsMock = {
     data: {
       habits: [
         {
+          __typename: "Habit",
           id: HABIT_ID,
           title: "Morning run",
           description: "Run 30 min",
@@ -49,7 +50,7 @@ const habitsMock = {
 
 const emptyHabitsMock = {
   request: { query: HABITS_QUERY },
-  result: { data: { habits: [] } },
+  result: { data: { habits: [] as any[] } },
 };
 
 const logsMock = {
@@ -57,7 +58,7 @@ const logsMock = {
     query: HABIT_LOGS_QUERY,
     variables: { habitId: HABIT_ID, from, to },
   },
-  result: { data: { habitLogs: [] } },
+  result: { data: { habitLogs: [] as any[] } },
 };
 
 describe("HabitDetailPage", () => {

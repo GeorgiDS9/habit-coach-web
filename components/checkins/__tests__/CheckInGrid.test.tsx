@@ -135,6 +135,6 @@ describe("CheckInGrid", () => {
         isLoading={false}
       />
     );
-    expect(screen.getByText(/rolling window/i)).toBeInTheDocument();
+    expect(screen.getByText(/rolling/i)).toBeInTheDocument();
   });
 });

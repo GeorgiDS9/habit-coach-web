@@ -21,7 +21,7 @@ export function HabitList({
 }: HabitListProps) {
   if (loading && habits.length === 0) {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2" role="status" aria-label="Loading habits">
         {[...Array(3)].map((_, i) => (
           <Skeleton key={i} className="h-[72px] w-full rounded-lg" />
         ))}
