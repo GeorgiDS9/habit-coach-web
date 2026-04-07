@@ -12,6 +12,7 @@ import {
 import { todayUTC, daysAgoUTC } from "@/lib/format-date";
 import toast from "react-hot-toast";
 import { extractErrorMessage } from "@/lib/api-error";
+import type { LogCheckInInput, RemoveCheckInInput } from "@/graphql/generated/graphql";
 
 export function useCheckIns(habitId: string, from: string, to: string) {
   const { data, loading, error } = useQuery(HABIT_LOGS_QUERY, {
@@ -46,7 +47,7 @@ export function useCheckIns(habitId: string, from: string, to: string) {
   });
 
   const logCheckIn = useCallback(
-    async (input: any) => {
+    async (input: LogCheckInInput) => {
       try {
         await logCheckInMutation({ variables: { input } });
         toast.success("Check-in logged!");
@@ -58,7 +59,7 @@ export function useCheckIns(habitId: string, from: string, to: string) {
   );
 
   const removeCheckIn = useCallback(
-    async (input: any) => {
+    async (input: RemoveCheckInInput) => {
       try {
         await removeCheckInMutation({ variables: { input } });
         toast.success("Check-in removed");

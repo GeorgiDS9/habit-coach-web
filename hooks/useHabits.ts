@@ -9,6 +9,7 @@ import {
 } from "@/graphql/operations";
 import toast from "react-hot-toast";
 import { extractErrorMessage } from "@/lib/api-error";
+import type { CreateHabitInput, ToggleHabitActiveInput } from "@/graphql/generated/graphql";
 
 export function useHabits() {
   const { data, loading, error, refetch } = useQuery(HABITS_QUERY, {
@@ -24,7 +25,7 @@ export function useHabits() {
   });
 
   const createHabit = useCallback(
-    async (input: any) => {
+    async (input: CreateHabitInput) => {
       try {
         await createHabitMutation({ variables: { input } });
         toast.success("Habit created!");
@@ -36,7 +37,7 @@ export function useHabits() {
   );
 
   const toggleHabitActive = useCallback(
-    async (input: any) => {
+    async (input: ToggleHabitActiveInput) => {
       try {
         const { data } = await toggleActiveMutation({ variables: { input } });
         const isActive = data?.toggleHabitActive?.isActive;

@@ -34,6 +34,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
     if (!isAuthenticated()) {
       router.replace(ROUTES.LOGIN);
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setChecking(false);
     }
   }, [router]);

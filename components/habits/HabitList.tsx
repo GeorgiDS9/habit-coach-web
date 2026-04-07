@@ -1,6 +1,5 @@
 "use client";
 
-import { Spinner } from "@/components/ui/Spinner";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { HabitItem } from "@/components/habits/HabitItem";
 import type { Habit } from "@/types/api";

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, type Mock } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ProtectedLayout from "../layout";
 import { isAuthenticated } from "@/lib/auth";
@@ -24,11 +24,11 @@ describe("ProtectedLayout (Auth Guard)", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (useRouter as any).mockReturnValue({ push, replace });
+    (useRouter as Mock).mockReturnValue({ push, replace });
   });
 
   it("redirects to login if not authenticated", () => {
-    (isAuthenticated as any).mockReturnValue(false);
+    (isAuthenticated as Mock).mockReturnValue(false);
     
     render(
       <ProtectedLayout>
@@ -41,7 +41,7 @@ describe("ProtectedLayout (Auth Guard)", () => {
   });
 
   it("renders children if authenticated", async () => {
-    (isAuthenticated as any).mockReturnValue(true);
+    (isAuthenticated as Mock).mockReturnValue(true);
 
     render(
       <ProtectedLayout>

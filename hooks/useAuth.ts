@@ -6,6 +6,7 @@ import { LOGIN_MUTATION, SIGNUP_MUTATION } from "@/graphql/operations";
 import { setToken, clearToken } from "@/lib/auth";
 import toast from "react-hot-toast";
 import { extractErrorMessage } from "@/lib/api-error";
+import type { LoginInput, SignupInput } from "@/graphql/generated/graphql";
 
 export function useAuth() {
   const apolloClient = useApolloClient();
@@ -14,7 +15,7 @@ export function useAuth() {
   const [signupMutation, signupState] = useMutation(SIGNUP_MUTATION);
 
   const login = useCallback(
-    async (input: any): Promise<void> => {
+    async (input: LoginInput): Promise<void> => {
       try {
         const { data } = await loginMutation({ variables: { input } });
         if (data?.login?.accessToken) {
@@ -30,7 +31,7 @@ export function useAuth() {
   );
 
   const signup = useCallback(
-    async (input: any): Promise<void> => {
+    async (input: SignupInput): Promise<void> => {
       try {
         const { data } = await signupMutation({ variables: { input } });
         if (data?.signup?.accessToken) {
