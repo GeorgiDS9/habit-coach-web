@@ -1,6 +1,7 @@
 "use client";
 
 import { Spinner } from "@/components/ui/Spinner";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { HabitItem } from "@/components/habits/HabitItem";
 import type { Habit } from "@/types/api";
 
@@ -21,8 +22,10 @@ export function HabitList({
 }: HabitListProps) {
   if (loading && habits.length === 0) {
     return (
-      <div className="flex justify-center py-16">
-        <Spinner />
+      <div className="flex flex-col gap-2">
+        {[...Array(3)].map((_, i) => (
+          <Skeleton key={i} className="h-[72px] w-full rounded-lg" />
+        ))}
       </div>
     );
   }

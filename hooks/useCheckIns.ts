@@ -10,27 +10,15 @@ import {
   REMOVE_CHECK_IN_MUTATION,
 } from "@/graphql/operations";
 import { todayUTC, daysAgoUTC } from "@/lib/format-date";
-import type { HabitLog, LogCheckInInput, RemoveCheckInInput } from "@/types/api";
-
-interface HabitLogsQueryData {
-  habitLogs: HabitLog[];
-}
-
-interface HabitLogsVariables {
-  habitId: string;
-  from: string;
-  to: string;
-}
+import toast from "react-hot-toast";
+import { extractErrorMessage } from "@/lib/api-error";
 
 export function useCheckIns(habitId: string, from: string, to: string) {
-  const { data, loading, error } = useQuery<HabitLogsQueryData, HabitLogsVariables>(
-    HABIT_LOGS_QUERY,
-    {
-      variables: { habitId, from, to },
-      fetchPolicy: "cache-and-network",
-      skip: !habitId,
-    }
-  );
+  const { data, loading, error } = useQuery(HABIT_LOGS_QUERY, {
+    variables: { habitId, from, to },
+    fetchPolicy: "cache-and-network",
+    skip: !habitId,
+  });
 
   // After a check-in mutation we need to refresh:
   // 1. The logs for this habit (so the grid updates)
@@ -58,15 +46,25 @@ export function useCheckIns(habitId: string, from: string, to: string) {
   });
 
   const logCheckIn = useCallback(
-    async (input: LogCheckInInput) => {
-      await logCheckInMutation({ variables: { input } });
+    async (input: any) => {
+      try {
+        await logCheckInMutation({ variables: { input } });
+        toast.success("Check-in logged!");
+      } catch (err) {
+        toast.error(extractErrorMessage(err));
+      }
     },
     [logCheckInMutation]
   );
 
   const removeCheckIn = useCallback(
-    async (input: RemoveCheckInInput) => {
-      await removeCheckInMutation({ variables: { input } });
+    async (input: any) => {
+      try {
+        await removeCheckInMutation({ variables: { input } });
+        toast.success("Check-in removed");
+      } catch (err) {
+        toast.error(extractErrorMessage(err));
+      }
     },
     [removeCheckInMutation]
   );

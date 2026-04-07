@@ -7,14 +7,11 @@ import {
   CREATE_HABIT_MUTATION,
   TOGGLE_HABIT_ACTIVE_MUTATION,
 } from "@/graphql/operations";
-import type { Habit, CreateHabitInput, ToggleHabitActiveInput } from "@/types/api";
-
-interface HabitsQueryData {
-  habits: Habit[];
-}
+import toast from "react-hot-toast";
+import { extractErrorMessage } from "@/lib/api-error";
 
 export function useHabits() {
-  const { data, loading, error, refetch } = useQuery<HabitsQueryData>(HABITS_QUERY, {
+  const { data, loading, error, refetch } = useQuery(HABITS_QUERY, {
     fetchPolicy: "cache-and-network",
   });
 
@@ -27,15 +24,26 @@ export function useHabits() {
   });
 
   const createHabit = useCallback(
-    async (input: CreateHabitInput) => {
-      await createHabitMutation({ variables: { input } });
+    async (input: any) => {
+      try {
+        await createHabitMutation({ variables: { input } });
+        toast.success("Habit created!");
+      } catch (err) {
+        toast.error(extractErrorMessage(err));
+      }
     },
     [createHabitMutation]
   );
 
   const toggleHabitActive = useCallback(
-    async (input: ToggleHabitActiveInput) => {
-      await toggleActiveMutation({ variables: { input } });
+    async (input: any) => {
+      try {
+        const { data } = await toggleActiveMutation({ variables: { input } });
+        const isActive = data?.toggleHabitActive?.isActive;
+        toast.success(isActive ? "Habit activated" : "Habit deactivated");
+      } catch (err) {
+        toast.error(extractErrorMessage(err));
+      }
     },
     [toggleActiveMutation]
   );
