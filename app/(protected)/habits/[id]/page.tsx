@@ -1,7 +1,7 @@
 "use client";
 
-import { use } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useHabits } from "@/hooks/useHabits";
 import { useCheckIns } from "@/hooks/useCheckIns";
 import { CheckInGrid, CheckInHistory } from "@/components/checkins/CheckInGrid";
@@ -10,10 +10,11 @@ import { Spinner } from "@/components/ui/Spinner";
 import { todayUTC, daysAgoUTC } from "@/lib/format-date";
 import { ROUTES } from "@/constants/routes";
 
-export default function HabitDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function HabitDetailPage() {
+  const params = useParams();
+  const id = String(params.id ?? "");
+
   const { habits, loading: habitsLoading } = useHabits();
-  const habit = habits.find((h) => h.id === id);
 
   const to = todayUTC();
   const from = daysAgoUTC(6);
@@ -21,13 +22,16 @@ export default function HabitDetailPage({ params }: { params: Promise<{ id: stri
   const { logs, loading: logsLoading, logCheckIn, removeCheckIn, logLoading, removeLoading } =
     useCheckIns(id, from, to);
 
-  if (habitsLoading && !habit) {
+  // Wait until the habits query has settled before deciding "not found"
+  if (habitsLoading) {
     return (
       <div className="flex justify-center py-16">
         <Spinner />
       </div>
     );
   }
+
+  const habit = habits.find((h) => h.id === id);
 
   if (!habit) {
     return (
@@ -62,6 +66,9 @@ export default function HabitDetailPage({ params }: { params: Promise<{ id: stri
 
       <Card>
         <CardTitle className="mb-4">Check-in</CardTitle>
+        <p className="mb-3 text-sm text-gray-500">
+          Click a day to mark it as done. Click again to unmark it.
+        </p>
         <CheckInGrid
           habitId={id}
           dates={dates}
