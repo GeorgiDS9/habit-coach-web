@@ -79,4 +79,18 @@ describe("LoginForm", () => {
     );
     expect(screen.getByRole("link", { name: /create one/i })).toBeInTheDocument();
   });
+
+  it("shows session-expired banner when sessionExpired prop is true", () => {
+    render(
+      <LoginForm onLogin={noop} onSuccess={vi.fn()} isLoading={false} sessionExpired={true} />
+    );
+    expect(screen.getByRole("status")).toHaveTextContent(/session has expired/i);
+  });
+
+  it("does not show session-expired banner by default", () => {
+    render(
+      <LoginForm onLogin={noop} onSuccess={vi.fn()} isLoading={false} />
+    );
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+  });
 });
