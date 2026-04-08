@@ -28,6 +28,11 @@ Run `npm run test:e2e` only when the API is running locally (requires `habit-coa
 **Test hygiene rules:**
 - Never hardcode dates in tests (e.g. `"2026-04-04"`). Use `new Date().toISOString().slice(0, 10)` for "today". Hardcoded dates rot silently and only fail in CI weeks later.
 
+## Types
+- Avoid `any`. Use precise TypeScript types for inputs, outputs, and function boundaries.
+- Prefer `unknown` over `any` when the shape is truly dynamic, then narrow with type guards or schema validation (e.g. Zod).
+- If `any` is unavoidable, keep it local, add a short justification comment, and do not leak it across module boundaries.
+
 ## Contract
 
 When **`habit-coach-api`** GraphQL schema or operations change, update this app (operations, codegen types, env, UI) in the **same** slice unless the task is explicitly backend-only.
