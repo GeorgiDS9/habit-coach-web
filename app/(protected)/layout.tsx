@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { isAuthenticated, clearToken } from "@/lib/auth";
+import { isAuthenticated } from "@/lib/auth";
 import { useApolloClient } from "@apollo/client/react";
 import { ROUTES } from "@/constants/routes";
 import { Spinner } from "@/components/ui/Spinner";
