@@ -14,8 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input) {\n      accessToken\n    }\n  }\n": typeof types.SignupDocument,
-    "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n    }\n  }\n": typeof types.LoginDocument,
+    "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": typeof types.SignupDocument,
+    "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": typeof types.LoginDocument,
+    "\n  mutation Refresh($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n": typeof types.RefreshDocument,
+    "\n  mutation Logout($refreshToken: String!) {\n    logout(refreshToken: $refreshToken)\n  }\n": typeof types.LogoutDocument,
     "\n  query Habits {\n    habits {\n      id\n      title\n      description\n      isActive\n      createdAt\n      currentStreak\n    }\n  }\n": typeof types.HabitsDocument,
     "\n  mutation CreateHabit($input: CreateHabitInput!) {\n    createHabit(input: $input) {\n      id\n      title\n      description\n      isActive\n      createdAt\n      currentStreak\n    }\n  }\n": typeof types.CreateHabitDocument,
     "\n  mutation ToggleHabitActive($input: ToggleHabitActiveInput!) {\n    toggleHabitActive(input: $input) {\n      id\n      isActive\n    }\n  }\n": typeof types.ToggleHabitActiveDocument,
@@ -25,8 +27,10 @@ type Documents = {
     "\n  query HabitWeeklyStats($from: String!, $to: String!) {\n    habits {\n      id\n      title\n      isActive\n      currentStreak\n      weeklyStats(from: $from, to: $to) {\n        dates\n        counts\n      }\n    }\n  }\n": typeof types.HabitWeeklyStatsDocument,
 };
 const documents: Documents = {
-    "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input) {\n      accessToken\n    }\n  }\n": types.SignupDocument,
-    "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n    }\n  }\n": types.LoginDocument,
+    "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.SignupDocument,
+    "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.LoginDocument,
+    "\n  mutation Refresh($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.RefreshDocument,
+    "\n  mutation Logout($refreshToken: String!) {\n    logout(refreshToken: $refreshToken)\n  }\n": types.LogoutDocument,
     "\n  query Habits {\n    habits {\n      id\n      title\n      description\n      isActive\n      createdAt\n      currentStreak\n    }\n  }\n": types.HabitsDocument,
     "\n  mutation CreateHabit($input: CreateHabitInput!) {\n    createHabit(input: $input) {\n      id\n      title\n      description\n      isActive\n      createdAt\n      currentStreak\n    }\n  }\n": types.CreateHabitDocument,
     "\n  mutation ToggleHabitActive($input: ToggleHabitActiveInput!) {\n    toggleHabitActive(input: $input) {\n      id\n      isActive\n    }\n  }\n": types.ToggleHabitActiveDocument,
@@ -53,11 +57,19 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input) {\n      accessToken\n    }\n  }\n"): (typeof documents)["\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input) {\n      accessToken\n    }\n  }\n"];
+export function graphql(source: "\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation Signup($input: SignupInput!) {\n    signup(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n    }\n  }\n"): (typeof documents)["\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n    }\n  }\n"];
+export function graphql(source: "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation Refresh($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation Refresh($refreshToken: String!) {\n    refresh(refreshToken: $refreshToken) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation Logout($refreshToken: String!) {\n    logout(refreshToken: $refreshToken)\n  }\n"): (typeof documents)["\n  mutation Logout($refreshToken: String!) {\n    logout(refreshToken: $refreshToken)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
