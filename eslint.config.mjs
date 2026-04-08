@@ -13,6 +13,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "graphql/generated/**",
     "node_modules/**",
+    "coverage/**",
   ]),
 ]);
 
