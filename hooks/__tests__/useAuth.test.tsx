@@ -58,7 +58,7 @@ describe("useAuth hook", () => {
   it("login sets both access and refresh tokens", async () => {
     const { result } = renderHook(() => useAuth(), {
       wrapper: ({ children }) => (
-        <MockedProvider mocks={[mockLogin]} addTypename={false}>
+        <MockedProvider mocks={[mockLogin]}>
           {children}
         </MockedProvider>
       ),
@@ -78,7 +78,7 @@ describe("useAuth hook", () => {
 
     const { result } = renderHook(() => useAuth(), {
       wrapper: ({ children }) => (
-        <MockedProvider mocks={[mockLogout]} addTypename={false}>
+        <MockedProvider mocks={[mockLogout]}>
           {children}
         </MockedProvider>
       ),

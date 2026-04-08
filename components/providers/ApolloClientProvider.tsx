@@ -11,6 +11,7 @@ import { SetContextLink } from "@apollo/client/link/context";
 import { ErrorLink } from "@apollo/client/link/error";
 import { ApolloProvider } from "@apollo/client/react";
 import { useMemo } from "react";
+import { CombinedGraphQLErrors, ServerError } from "@apollo/client/errors";
 import {
   getToken,
   getRefreshToken,
@@ -20,6 +21,13 @@ import {
 } from "@/lib/auth";
 import { REFRESH_MUTATION } from "@/graphql/operations";
 
+interface GraphQLError {
+  message: string;
+  extensions?: {
+    code?: string;
+  };
+}
+
 let isRefreshing = false;
 let pendingRequests: ((token: string | null) => void)[] = [];
 
@@ -28,7 +36,7 @@ const resolvePendingRequests = (token: string | null) => {
   pendingRequests = [];
 };
 
-function makeClient(): ApolloClient<object> {
+function makeClient(): ApolloClient {
   const httpLink = new HttpLink({
     uri: process.env.NEXT_PUBLIC_GRAPHQL_URL ?? "http://localhost:4000/graphql",
   });
@@ -44,10 +52,11 @@ function makeClient(): ApolloClient<object> {
   });
 
   const errorLink = new ErrorLink(
-    ({ graphQLErrors, networkError, operation, forward }) => {
-      if (graphQLErrors) {
-        const isUnauthenticated = graphQLErrors.some(
-          (e) => e.extensions?.["code"] === "UNAUTHENTICATED"
+    (errorLinkOptions) => {
+      const { error, operation, forward } = errorLinkOptions;
+      if (CombinedGraphQLErrors.is(error)) {
+        const isUnauthenticated = error.errors.some(
+          (e: GraphQLError) => e.extensions?.["code"] === "UNAUTHENTICATED"
         );
 
         if (isUnauthenticated) {
@@ -129,8 +138,10 @@ function makeClient(): ApolloClient<object> {
         }
       }
 
-      if (networkError) {
-        console.error(`[Network error]: ${networkError}`);
+      if (ServerError.is(error)) {
+        console.error(`[Network error]: ${error.message} (status: ${error.statusCode})`);
+      } else if (error) {
+        console.error(`[Network error]: ${error}`);
       }
     }
   );
