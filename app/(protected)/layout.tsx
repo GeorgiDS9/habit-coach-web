@@ -25,9 +25,11 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
+import { useAuth } from "@/hooks/useAuth";
+
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const apolloClient = useApolloClient();
+  const { logout } = useAuth();
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
@@ -40,9 +42,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
   }, [router]);
 
   const handleLogout = async () => {
-    clearToken();
-    await apolloClient.clearStore();
-    router.replace(ROUTES.LOGIN);
+    await logout();
   };
 
   if (checking) {
