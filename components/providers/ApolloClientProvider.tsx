@@ -52,7 +52,9 @@ function redirectToLogin(reason?: "expired"): void {
 
 function makeClient(): ApolloClient {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL;
-  if (!graphqlUrl && process.env.NODE_ENV === "production") {
+  // Only throw at browser runtime — during `next build` prerendering, window
+  // is undefined (Node.js) and the env var is legitimately absent in CI.
+  if (!graphqlUrl && process.env.NODE_ENV === "production" && typeof window !== "undefined") {
     throw new Error("NEXT_PUBLIC_GRAPHQL_URL must be set in production");
   }
   const httpLink = new HttpLink({
