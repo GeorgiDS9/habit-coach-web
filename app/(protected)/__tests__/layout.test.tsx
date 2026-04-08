@@ -14,8 +14,10 @@ vi.mock("next/navigation", () => ({
   usePathname: vi.fn(),
 }));
 
-vi.mock("@apollo/client/react", () => ({
-  useApolloClient: () => ({ clearStore: vi.fn() }),
+vi.mock("@/hooks/useAuth", () => ({
+  useAuth: () => ({
+    logout: vi.fn(),
+  }),
 }));
 
 describe("ProtectedLayout (Auth Guard)", () => {
@@ -40,7 +42,7 @@ describe("ProtectedLayout (Auth Guard)", () => {
     expect(screen.queryByText(/secret content/i)).not.toBeInTheDocument();
   });
 
-  it("renders children if authenticated", async () => {
+  it("renders children if authenticated", () => {
     (isAuthenticated as Mock).mockReturnValue(true);
 
     render(

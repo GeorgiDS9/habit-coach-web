@@ -51,7 +51,7 @@ const habitsMock = {
 
 const emptyHabitsMock = {
   request: { query: HABITS_QUERY },
-  result: { data: { habits: [] as Habit[] } },
+  result: { data: { habits: [] as (Habit & { __typename: 'Habit' })[] } },
 };
 
 const logsMock = {
@@ -59,7 +59,7 @@ const logsMock = {
     query: HABIT_LOGS_QUERY,
     variables: { habitId: HABIT_ID, from, to },
   },
-  result: { data: { habitLogs: [] as HabitLog[] } },
+  result: { data: { habitLogs: [] as (HabitLog & { __typename: 'HabitLog' })[] } },
 };
 
 describe("HabitDetailPage", () => {
@@ -138,7 +138,7 @@ describe("HabitDetailPage", () => {
 
   it("shows not found only after loading completes with unknown id", async () => {
     render(
-      <MockedProvider mocks={[emptyHabitsMock]}>
+      <MockedProvider mocks={[emptyHabitsMock, logsMock]}>
         <HabitDetailPage />
       </MockedProvider>
     );
