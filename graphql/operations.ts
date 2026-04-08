@@ -8,6 +8,7 @@ export const SIGNUP_MUTATION = gql(`
   mutation Signup($input: SignupInput!) {
     signup(input: $input) {
       accessToken
+      refreshToken
     }
   }
 `);
@@ -16,7 +17,23 @@ export const LOGIN_MUTATION = gql(`
   mutation Login($input: LoginInput!) {
     login(input: $input) {
       accessToken
+      refreshToken
     }
+  }
+`);
+
+export const REFRESH_MUTATION = gql(`
+  mutation Refresh($refreshToken: String!) {
+    refresh(refreshToken: $refreshToken) {
+      accessToken
+      refreshToken
+    }
+  }
+`);
+
+export const LOGOUT_MUTATION = gql(`
+  mutation Logout($refreshToken: String!) {
+    logout(refreshToken: $refreshToken)
   }
 `);
 
