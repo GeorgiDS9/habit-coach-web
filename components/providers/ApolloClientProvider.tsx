@@ -51,8 +51,12 @@ function redirectToLogin(reason?: "expired"): void {
 }
 
 function makeClient(): ApolloClient {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL;
+  if (!graphqlUrl && process.env.NODE_ENV === "production") {
+    throw new Error("NEXT_PUBLIC_GRAPHQL_URL must be set in production");
+  }
   const httpLink = new HttpLink({
-    uri: process.env.NEXT_PUBLIC_GRAPHQL_URL ?? "http://localhost:4000/graphql",
+    uri: graphqlUrl ?? "http://localhost:4000/graphql",
   });
 
   const authLink = new SetContextLink((prevContext) => {
